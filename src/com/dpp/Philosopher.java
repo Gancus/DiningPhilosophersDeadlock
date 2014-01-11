@@ -15,10 +15,10 @@ import java.util.logging.Logger;
  */
 public class Philosopher extends Thread {
     private int id;
-    private Object leftFork, rightFork;
+    private Semaphore leftFork, rightFork;
     private int eatCouter = 0;
 
-    public Philosopher(int id, Object leftFork, Object rightFork) {
+    public Philosopher(int id, Semaphore leftFork, Semaphore rightFork) {
         this.id = id;
         this.leftFork = leftFork;
         this.rightFork = rightFork;
@@ -31,11 +31,11 @@ public class Philosopher extends Thread {
         while(eatCouter <= 100) {
             try {
                 think();
-                synchronized (leftFork) {
-                    synchronized (rightFork) {
-                        eat();
-                    }
-                }
+                leftFork.acquire();
+                rightFork.acquire();
+                eat();
+                leftFork.release();
+                rightFork.release();
             } catch (InterruptedException ex) {
                 Logger.getLogger(Philosopher.class.getName()).log(Level.SEVERE, null, ex);
             }
