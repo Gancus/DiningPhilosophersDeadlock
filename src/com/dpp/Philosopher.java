@@ -14,7 +14,7 @@ import java.util.logging.Logger;
  * @author Marcin
  */
 public class Philosopher extends Thread {
-    private int id;
+    private final int id;
     private Semaphore leftFork, rightFork;
     private int eatCouter = 0;
 

@@ -15,6 +15,8 @@ public class Table {
     private ArrayList<Philosopher> philosophers = new ArrayList<>();
     
     public void startDinner(int n) throws InterruptedException {
+        if(n < 2)
+            return;
         for (int i = 0; i < n; i++) {
             forks.add(new Semaphore(1, true));
         }
